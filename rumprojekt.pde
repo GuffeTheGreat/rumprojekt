@@ -1,19 +1,29 @@
 
-PImage earth;
+PImage earthimage;
+PImage space;
+PShape earth;
+
 
 void setup() {
-  size(750, 750, P3D);
+  size(3840, 2160, P3D);
+  background(0);
+  earthimage = loadImage("earth.jpg");
+  space = loadImage("space.jpg");
   
+  earth = createShape(SPHERE, 250); 
+  earth.setStroke(false);
+  earth.setTexture(earthimage);
+
   
-  earth = loadImage("earth.jpg");
-  
+
 }
 
 void draw() {
-  translate(375, 375, 0);
-  background(0);
-  sphere(250);
-  image(earth, -375, -375, width, height);
+  translate(width/2, height/2); 
+  shape(earth);
+  noStroke();
   
-  
+  imageMode(CENTER);
+  image(space, 0, 0, width, height);
+
 }
