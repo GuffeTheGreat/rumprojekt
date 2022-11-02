@@ -2,7 +2,7 @@
 PImage earth;
 
 void setup() {
-  size(1000, 500, P3D);
+  size(750, 750, P3D);
   
   
   earth = loadImage("earth.jpg");
@@ -10,8 +10,10 @@ void setup() {
 }
 
 void draw() {
+  translate(375, 375, 0);
   background(0);
-  image(earth, 0, 0, width, height);
+  sphere(250);
+  image(earth, -375, -375, width, height);
   
   
 }
