@@ -17,7 +17,7 @@ void setup() {
   spaceimage= loadImage("space.jpg");
 
   earth = new Sphere(new PVector(0, 0, 0), 250, globeimage);
-  space = new Sphere(new PVector(0, 0, 0), 3000, spaceimage);
+  space = new Sphere(new PVector(0, 0, 0), 192000, spaceimage);
 }
 
 void draw() {
