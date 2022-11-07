@@ -1,5 +1,4 @@
 
-
 PImage globeimage;
 PImage spaceimage;
 
@@ -37,8 +36,18 @@ void draw() {
     0, 1, 0);
 
   earth.draw();
-  space.draw();
+  space.draw(); 
 
   camera();
   noLights();
+}
+
+void mouseWheel(MouseEvent event) {
+    if (event.getCount() < 0) {
+      camDir = camDir.add(camDir.copy().sub(camPos).normalize().mult(15));
+      camPos = camPos.add(camDir.copy().sub(camPos).normalize().mult(15));
+    } else {
+      camPos = camPos.add(camDir.copy().sub(camPos).normalize().mult(-15));
+      camDir = camDir.add(camDir.copy().sub(camPos).normalize().mult(-15));
+    }
 }
