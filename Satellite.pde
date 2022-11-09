@@ -46,7 +46,7 @@ class Satellite{
 
 
   void display(){
-    
+    satlatitude += 1.0;
 
     
 

@@ -29,8 +29,8 @@ void setup() {
   globeimage = loadImage("earth.jpg");
   spaceimage= loadImage("space.jpg");
 
-  earth = new Sphere(new PVector(0, 0, 0), 127.5/2, globeimage);
-  space = new Sphere(new PVector(0, 0, 0), 192000, spaceimage);
+  earth = new Sphere(127.5/2, globeimage);
+  space = new Sphere(192000, spaceimage);
   test_satellite = new Satellite();
   
   test_satellite.setData(Satelite_1_data);
