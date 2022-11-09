@@ -10,7 +10,7 @@ class Satellite{
   boolean eclipsed;
   
   PVector angle = new PVector(0,0,0);
-  
+  PVector course;
   
   
   
@@ -32,6 +32,8 @@ class Satellite{
    JSONArray positions = data.getJSONArray("positions");
    JSONObject pos_0 = positions.getJSONObject(0);
    
+   JSONObject pos_1 = positions.getJSONObject(1);
+   
    satlatitude = pos_0.getFloat("satlatitude");
    satlongitude = pos_0.getFloat("satlongitude");
    sataltitude = (pos_0.getFloat("sataltitude")/100.0) + 127.5/2;
@@ -40,17 +42,27 @@ class Satellite{
    ra = pos_0.getFloat("ra");
    dec = pos_0.getFloat("dec");
    timestamp  = pos_0.getInt("timestamp"); 
+   
+   
+   course = new PVector(
+   (pos_1.getFloat("satlatitude") - satlongitude),
+   (pos_1.getFloat("satlongitude") - satlatitude)
+   );
+   
+   
+  }
+
+
+  void update_pos(){
+    satlatitude += course.x * 10;
+    satlongitude += course.y * 10;
     
   }
 
 
-
-
-
   void display(){
-    satlatitude += 1.0;
-
     
+  
 
     
     PVector location = convert(satlatitude,satlongitude,sataltitude);
@@ -61,11 +73,11 @@ class Satellite{
     atan(-location.z)
     );
     
-    
+    float rot_offset = 0.7853981634;
     translate(location.x,location.y,location.z);
-    rotateX(target_angle.x);
-    rotateY(target_angle.y);
-    rotateZ(target_angle.z);
+    rotateX(target_angle.x - rot_offset);
+    rotateY(target_angle.y - rot_offset);
+    rotateZ(target_angle.z - rot_offset);
 
   }
   
