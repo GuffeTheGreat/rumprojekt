@@ -9,8 +9,10 @@ class Satellite{
   int timestamp;
   boolean eclipsed;
   
-  
   PVector angle = new PVector(0,0,0);
+  
+  
+  
   
   PVector convert(float lat, float lon, float h ) {
   float theta = radians(lat);
@@ -25,7 +27,7 @@ class Satellite{
 
 }
 
-
+  
   void setData(JSONObject data){
    JSONArray positions = data.getJSONArray("positions");
    JSONObject pos_0 = positions.getJSONObject(0);
@@ -64,10 +66,7 @@ class Satellite{
     rotateX(target_angle.x);
     rotateY(target_angle.y);
     rotateZ(target_angle.z);
-    
-    box(5);
-//    shape(satellite_model,0,0);
-  }
 
+  }
   
 }

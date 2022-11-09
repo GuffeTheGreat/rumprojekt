@@ -3,6 +3,8 @@ import peasy.*;
 PImage globeimage;
 PImage spaceimage;
 
+PShape s;
+
 Satellite test_satellite;
 
 Sphere earth;
@@ -16,6 +18,8 @@ JSONArray Satelite_1_positions;
             
 void setup() {
   fullScreen(P3D);
+  s = loadShape("satellit.obj");
+  
   
   frameRate(60);
   perspective(PI / 2, float(width) / float(height), 0.1, 1000000);
@@ -41,13 +45,35 @@ void setup() {
   
 }
 
+
+  PVector convert(float lat, float lon, float h ) {
+  float theta = radians(lat);
+  float phi = radians(lon) + PI;
+
+  // fix: in OpenGL, y & z axes are flipped from math notation of spherical coordinates
+  float x = h * cos(theta) * cos(phi);
+  float y = -h * sin(theta);
+  float z = -h * cos(theta) * sin(phi);
+
+  return new PVector(x, y, z);
+
+}
+
 void draw() {
   background(0);
   lights();
-  
+  pushMatrix();
   earth.draw();
   space.draw(); 
+  
+  
   test_satellite.display();
 
+  shape(s, 0, 0);
+
+  popMatrix();
+  
+  //PVector Sphere_location = convert(35.652832,139.839478,80);
+  
   noLights();
 }
