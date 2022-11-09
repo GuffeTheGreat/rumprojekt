@@ -1,4 +1,5 @@
 class Satellite{
+  
   float satlatitude;
   float satlongitude;
   float sataltitude;
@@ -13,12 +14,12 @@ class Satellite{
   PVector course;
   
   
-  
+    // Create Convert Function
   PVector convert(float lat, float lon, float h ) {
   float theta = radians(lat);
   float phi = radians(lon) + PI;
 
-  // fix: in OpenGL, y & z axes are flipped from math notation of spherical coordinates
+    // fix: in OpenGL, y & z axes are flipped from math notation of spherical coordinates
   float x = h * cos(theta) * cos(phi);
   float y = -h * sin(theta);
   float z = -h * cos(theta) * sin(phi);
@@ -26,12 +27,11 @@ class Satellite{
   return new PVector(x, y, z);
 
 }
-
   
+    // Set Data
   void setData(JSONObject data){
    JSONArray positions = data.getJSONArray("positions");
-   JSONObject pos_0 = positions.getJSONObject(0);
-   
+   JSONObject pos_0 = positions.getJSONObject(0);   
    JSONObject pos_1 = positions.getJSONObject(1);
    
    satlatitude = pos_0.getFloat("satlatitude");
@@ -43,30 +43,23 @@ class Satellite{
    dec = pos_0.getFloat("dec");
    timestamp  = pos_0.getInt("timestamp"); 
    
-   
+     // Create Course for Satellite
    course = new PVector(
-   (pos_1.getFloat("satlatitude") - satlongitude),
-   (pos_1.getFloat("satlongitude") - satlatitude)
+   (pos_1.getFloat("satlatitude") - sataltitude),
+   (pos_1.getFloat("satlongitude") - satlongitude)
    );
-   
-   
   }
 
-
+    // Update Course for Satellit
   void update_pos(){
-    satlatitude += course.x * 10;
-    satlongitude += course.y * 10;
+    satlatitude += course.x * 0.01;
+    satlongitude += course.y * 0.01;
     
   }
 
-
+    // Display Satellite at Current Location
   void display(){
-    
-  
-
-    
     PVector location = convert(satlatitude,satlongitude,sataltitude);
-
     PVector target_angle = new PVector (
     atan(-location.x),
     atan(-location.y),
@@ -79,6 +72,5 @@ class Satellite{
     rotateY(target_angle.y - rot_offset);
     rotateZ(target_angle.z - rot_offset);
 
-  }
-  
+  } 
 }
