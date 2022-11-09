@@ -10,7 +10,7 @@ class Satellite{
   boolean eclipsed;
   
   
-
+  PVector angle = new PVector(0,0,0);
   
   PVector convert(float lat, float lon, float h ) {
   float theta = radians(lat);
@@ -52,11 +52,18 @@ class Satellite{
 
     
     PVector location = convert(satlatitude,satlongitude,sataltitude);
-    PVector pointZero = new PVector(0,0,0);
+
+    PVector target_angle = new PVector (
+    atan(-location.x),
+    atan(-location.y),
+    atan(-location.z)
+    );
     
-    PVector angle = angleBetween(location,pointZero);
+    
     translate(location.x,location.y,location.z);
-    
+    rotateX(target_angle.x);
+    rotateY(target_angle.y);
+    rotateZ(target_angle.z);
     
     box(5);
 //    shape(satellite_model,0,0);

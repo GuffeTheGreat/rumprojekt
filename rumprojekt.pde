@@ -16,9 +16,11 @@ JSONArray Satelite_1_positions;
             
 void setup() {
   fullScreen(P3D);
+  
+  frameRate(60);
   perspective(PI / 2, float(width) / float(height), 0.1, 1000000);
   noStroke();
-  
+
   
   Satelite_1_data = loadJSONObject("https://api.n2yo.com/rest/v1/satellite/positions/25544/41.702/-76.014/30/2/&apiKey=2EJWFP-QSJ6BD-CQSJAX-4Y5R");
 
