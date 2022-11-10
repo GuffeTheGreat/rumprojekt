@@ -13,5 +13,5 @@ class Sphere {
   
   void draw() {
     shape(s);    
-  } 
+  }
 }

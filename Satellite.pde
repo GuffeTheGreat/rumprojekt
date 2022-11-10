@@ -1,5 +1,6 @@
 class Satellite{
   
+  String name;
   float satlatitude;
   float satlongitude;
   float sataltitude;
@@ -9,10 +10,6 @@ class Satellite{
   float dec;
   int timestamp;
   boolean eclipsed;
-  
-  PVector angle = new PVector(0,0,0);
-  PVector course;
-  
   
     // Create Convert Function
   PVector convert(float lat, float lon, float h ) {
@@ -30,47 +27,42 @@ class Satellite{
   
     // Set Data
   void setData(JSONObject data){
-   JSONArray positions = data.getJSONArray("positions");
-   JSONObject pos_0 = positions.getJSONObject(0);   
-   JSONObject pos_1 = positions.getJSONObject(1);
-   
-   satlatitude = pos_0.getFloat("satlatitude");
-   satlongitude = pos_0.getFloat("satlongitude");
-   sataltitude = (pos_0.getFloat("sataltitude")/100.0) + 127.5/2;
-   azimuth = pos_0.getFloat("azimuth");
-   elevation = pos_0.getFloat("elevation");
-   ra = pos_0.getFloat("ra");
-   dec = pos_0.getFloat("dec");
-   timestamp  = pos_0.getInt("timestamp"); 
-   
-     // Create Course for Satellite
-   course = new PVector(
-   (pos_1.getFloat("satlatitude") - sataltitude),
-   (pos_1.getFloat("satlongitude") - satlongitude)
-   );
-  }
 
-    // Update Course for Satellit
-  void update_pos(){
-    satlatitude += course.x * 0.01;
-    satlongitude += course.y * 0.01;
-    
+   JSONArray positions = data.getJSONArray("positions");
+   JSONObject info = data.getJSONObject("info"); 
+   JSONObject pos_0 = positions.getJSONObject(0);
+
+   this.name = info.getString("satname");
+   this.satlatitude = pos_0.getFloat("satlatitude");
+   this.satlongitude = pos_0.getFloat("satlongitude");
+   this.sataltitude = (pos_0.getFloat("sataltitude")/1000.0) + 90.0;
+   this.azimuth = pos_0.getFloat("azimuth");
+   this.elevation = pos_0.getFloat("elevation");
+   this.ra = pos_0.getFloat("ra");
+   this.dec = pos_0.getFloat("dec");
+   this.timestamp  = pos_0.getInt("timestamp"); 
+     
+
+   
   }
 
     // Display Satellite at Current Location
-  void display(){
-    PVector location = convert(satlatitude,satlongitude,sataltitude);
-    PVector target_angle = new PVector (
-    atan(-location.x),
-    atan(-location.y),
-    atan(-location.z)
-    );
-    
-    float rot_offset = 0.7853981634;
-    translate(location.x,location.y,location.z);
-    rotateX(target_angle.x - rot_offset);
-    rotateY(target_angle.y - rot_offset);
-    rotateZ(target_angle.z - rot_offset);
+  void display(PShape shape){
 
+    PVector location = convert(satlatitude,satlongitude,sataltitude);
+    
+    translate(location.x,location.y,location.z);
+   
+    shape(shape, 0, 0);
+
+    displayText();
+  }
+
+  
+void displayText(){
+  textSize(10);
+  fill(255);
+  text("Name: " + name + "\n Time: " + timestamp + "\n Latitude: " + satlatitude + "\n Longitude: " + satlongitude + "\n Altitude: " + sataltitude, 0,0);
   } 
+  
 }
